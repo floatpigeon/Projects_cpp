@@ -54,7 +54,8 @@ public:
         cv::waitKey(0);
     }
 
-    static void generate_color_range_image(cv::Scalar lowerlimit, cv::Scalar upperlimit) {
+    static void generate_color_range_image(std::string windowname, cv::Scalar lowerlimit,
+                                           cv::Scalar upperlimit) {
         int rows = abs(upperlimit[1] - lowerlimit[1]);
         int cols = abs(upperlimit[2] - lowerlimit[2]);
 
@@ -74,10 +75,9 @@ public:
 
         cv::cvtColor(image, image, cv::COLOR_HLS2BGR);
         cv::Mat displayImage;
-        cv::resize(image, displayImage, cv::Size(), 2.0, 2.0, cv::INTER_LINEAR);
+        cv::resize(image, displayImage, cv::Size(), 3.0, 3.0, cv::INTER_LINEAR);
 
-        cv::imshow("Image", displayImage);
-        std::cout << ".." << std::endl;
-        cv::waitKey(0);
+        cv::imshow(windowname, displayImage);
+        // cv::waitKey(0);
     }
 };
