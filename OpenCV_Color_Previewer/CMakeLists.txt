@@ -3,9 +3,9 @@ project(Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(include)
+include_directories(src)
 
-add_executable(Project src/main.cpp)
+add_executable(Project main.cpp)
 
 
 find_package(OpenCV REQUIRED)
