@@ -1,5 +1,6 @@
 
 #pragma once
+
 #include <cstdio>
 #include <iostream>
 #include <opencv2/core/types.hpp>
@@ -54,8 +55,8 @@ public:
         cv::waitKey(0);
     }
 
-    static void generate_color_range_image(std::string windowname, cv::Scalar lowerlimit,
-                                           cv::Scalar upperlimit) {
+    static cv::Mat generate_color_range_image(std::string windowname, cv::Scalar lowerlimit,
+                                              cv::Scalar upperlimit) {
         int rows = abs(upperlimit[1] - lowerlimit[1]);
         int cols = abs(upperlimit[2] - lowerlimit[2]);
 
@@ -78,6 +79,6 @@ public:
         cv::resize(image, displayImage, cv::Size(), 3.0, 3.0, cv::INTER_LINEAR);
 
         cv::imshow(windowname, displayImage);
-        // cv::waitKey(0);
+        return displayImage;
     }
 };
