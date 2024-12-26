@@ -6,7 +6,9 @@
 #include "examples.hpp"
 
 int main() {
-    Examples::color_filter_HLS_test();
+    // Examples::generate_gradient_image_test();
+
+    Examples::HLS_color_filter_test();
 
     return 0;
 }
