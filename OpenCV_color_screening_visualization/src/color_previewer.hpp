@@ -33,28 +33,6 @@ public:
         cv::waitKey(0);
     }
 
-    static cv::Mat generate_LS_range_image(std::string windowname, cv::Scalar lowerlimit, cv::Scalar upperlimit) {
-        int rows = abs(upperlimit[1] - lowerlimit[1]);
-        int cols = abs(upperlimit[2] - lowerlimit[2]);
-
-        cv::Mat image(rows, cols, CV_8UC3);
-        int v0 = lowerlimit[0];
-        for (int i = 0; i < rows; i++) {
-            int v1 = lowerlimit[1] + i;
-            for (int j = 0; j < cols; j++) {
-                int v2                    = lowerlimit[2] + j;
-                image.at<cv::Vec3b>(i, j) = cv::Vec3b(v0, v1, v2);
-            }
-        }
-
-        cv::cvtColor(image, image, cv::COLOR_HLS2BGR);
-        cv::Mat displayImage;
-        cv::resize(image, displayImage, cv::Size(), 3.0, 3.0, cv::INTER_LINEAR);
-
-        cv::imshow(windowname, displayImage);
-        return displayImage;
-    }
-
     static cv::Mat generate_gradient_image(
         std::string windowname, cv::Scalar lowerlimit, cv::Scalar upperlimit, int mode) {
         int rows, cols;

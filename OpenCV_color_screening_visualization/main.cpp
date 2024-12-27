@@ -6,9 +6,7 @@
 #include "examples.hpp"
 
 int main() {
-    // Examples::generate_gradient_image_test();
-
-    Examples::HLS_color_filter_test();
+    Examples::darts_target_finder_test();
 
     return 0;
 }
