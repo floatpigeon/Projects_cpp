@@ -6,6 +6,8 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 
+namespace OpenCVColorScreeningVisualization {
+
 class ImageProcess {
 public:
     static void draw_range(cv::Mat& binary, cv::Mat& draw) {
@@ -45,3 +47,4 @@ public:
         return targets;
     }
 };
+}  // namespace OpenCVColorScreeningVisualization

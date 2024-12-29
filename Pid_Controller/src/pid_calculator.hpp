@@ -5,6 +5,8 @@
 #include <cmath>
 #include <limits>
 
+namespace PidController {
+
 class PidCalculator {
 public:
     PidCalculator(double kp, double ki, double kd) : kp(kp), ki(ki), kd(kd) { reset(); }
@@ -12,7 +14,7 @@ public:
     virtual ~PidCalculator() = default;
 
     void reset() {
-        last_err_ = nan;
+        last_err_     = nan;
         err_integral_ = 0;
     }
 
@@ -21,7 +23,7 @@ public:
             return nan;
         } else {
             double control = kp * err + ki * err_integral_;
-            err_integral_ = std::clamp(err_integral_ + err, integral_min, integral_max);
+            err_integral_  = std::clamp(err_integral_ + err, integral_min, integral_max);
 
             if (!std::isnan(last_err_)) control += kd * (err - last_err_);
             last_err_ = err;
@@ -40,3 +42,4 @@ protected:
 
     double last_err_, err_integral_;
 };
+}  // namespace PidController

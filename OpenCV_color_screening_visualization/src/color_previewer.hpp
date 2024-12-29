@@ -9,6 +9,8 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 
+namespace OpenCVColorScreeningVisualization {
+
 class ColorPreviewer {
 public:
     static void BGR_to_HLS() {
@@ -100,3 +102,5 @@ public:
         return displayImage;
     }
 };
+
+}  // namespace OpenCVColorScreeningVisualization

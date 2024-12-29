@@ -9,6 +9,8 @@
 #include "color_processing.hpp"
 #include "image_processing.hpp"
 
+namespace OpenCVColorScreeningVisualization {
+
 class Examples {
 public:
     static void darts_target_finder_test() {
@@ -83,3 +85,4 @@ public:
         cv::waitKey(0);
     }
 };
+}  // namespace OpenCVColorScreeningVisualization

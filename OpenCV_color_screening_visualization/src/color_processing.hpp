@@ -4,6 +4,8 @@
 #include <opencv2/core/mat.hpp>
 #include <opencv2/opencv.hpp>
 
+namespace OpenCVColorScreeningVisualization {
+
 class ColorProcess {
 public:
     static void HLS_color_filter(cv::Mat& input_image, cv::Mat& output_image) {
@@ -54,3 +56,5 @@ public:
         // cv::bitwise_and(GreenMask, BrightMask, output_image);
     }
 };
+
+}  // namespace OpenCVColorScreeningVisualization

@@ -5,8 +5,11 @@
 
 #include "examples.hpp"
 
+namespace OpenCVColorScreeningVisualization {
+
 int main() {
     Examples::darts_target_finder_test();
 
     return 0;
 }
+}  // namespace OpenCVColorScreeningVisualization
