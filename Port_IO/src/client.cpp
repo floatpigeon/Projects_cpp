@@ -3,9 +3,13 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <chrono>
+#include <cmath>
 #include <cstring>
 #include <iostream>
+#include <numbers>
 #include <string>
+#include <thread>
 
 namespace PortIO {
 
@@ -17,6 +21,14 @@ public:
         server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     }
 
+    void update() {
+        count++;
+        double message_double      = 10 * (sin(count / 1000.0 * std::numbers::pi) + 1);
+        std::string message_string = "hello";
+        send_message_to_socket(message_double);
+    }
+
+private:
     void send_message_to_socket(const std::string &message) {
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
         if (sockfd < 0) {
@@ -50,35 +62,35 @@ public:
         }
 
         std::string buffer = std::to_string(message);
-
         send(sockfd, buffer.data(), buffer.size(), 0);
         std::cout << "Send Success, Message : " << message << std::endl;
         close(sockfd);
     }
 
-private:
     const int PORT = 12345;
     int sockfd;
     struct sockaddr_in server_addr;
+    double count = 0;
 };
 }  // namespace PortIO
 
 int main() {
     PortIO::Client client;
-    std::string message_string = "FloatPigeon here!";
-    double message_double      = 100.0;
-    int message_int            = 66;
-    int count                  = 0;
 
-    while (true) {
-        switch (count) {
-            case 0: client.send_message_to_socket(message_string); break;
-            case 1: client.send_message_to_socket(message_double); break;
-            case 2: client.send_message_to_socket(message_int); break;
-            default: break;
+    const int fps       = 1000;
+    const auto interval = std::chrono::microseconds(1000000 / fps);
+
+    for (;;) {
+        auto start_time = std::chrono::steady_clock::now();
+
+        client.update();
+
+        auto end_time     = std::chrono::steady_clock::now();
+        auto elapsed_time = end_time - start_time;
+
+        if (elapsed_time < interval) {
+            std::this_thread::sleep_for(interval - elapsed_time);
         }
-        count = ++count % 3;
-        sleep(1);
     }
     return 0;
 }

@@ -29,7 +29,7 @@ public:
             return;
         }
 
-        if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
             std::cerr << "Bind failed" << std::endl;
             close(server_fd);
             return;
@@ -40,7 +40,7 @@ public:
         std::cout << "Server listening on port " << PORT << "..." << std::endl;
 
         while (true) {
-            new_sock = accept(server_fd, (struct sockaddr *)&client_addr, &addr_len);
+            new_sock = accept(server_fd, (struct sockaddr*)&client_addr, &addr_len);
             if (new_sock < 0) {
                 std::cerr << "Accept faild" << std::endl;
                 continue;
@@ -50,7 +50,16 @@ public:
             int read_size     = read(new_sock, buffer, sizeof(buffer) - 1);
             if (read_size > 0) {
                 buffer[read_size] = '\0';
-                std::cout << "Received message: " << buffer << std::endl;
+                // std::cout << "Received message: " << buffer << std::endl;
+            }
+
+            try {
+                double value = std::stod(buffer);
+                std::cout << "Converted value: " << value << std::endl;
+            } catch (const std::invalid_argument& e) {
+                std::cerr << "Invalid argument: " << e.what() << std::endl;
+            } catch (const std::out_of_range& e) {
+                std::cerr << "Out of range: " << e.what() << std::endl;
             }
 
             close(new_sock);
