@@ -8,26 +8,33 @@ namespace PortIO {
 
 class Server {
 public:
-    void receive_message_from_socket() {
-        int server_fd, new_sock;
-        struct sockaddr_in server_addr, client_addr;
-        socklen_t addr_len = sizeof(client_addr);
+    Server() {
+        server_addr.sin_family      = AF_INET;
+        server_addr.sin_addr.s_addr = INADDR_ANY;
+        server_addr.sin_port        = htons(PORT);
+    }
 
-        server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    void receive_message_from_socket() {
+        socklen_t addr_len = sizeof(client_addr);
+        server_fd          = socket(AF_INET, SOCK_STREAM, 0);
+
         if (server_fd < 0) {
             std::cerr << "ERROR : Server creat socket fail" << std::endl;
             return;
         }
 
-        server_addr.sin_family      = AF_INET;
-        server_addr.sin_addr.s_addr = INADDR_ANY;
-        server_addr.sin_port        = htons(PORT);
+        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
+            std::cerr << "Error setting SO_REUSEADDR option" << std::endl;
+            close(server_fd);
+            return;
+        }
 
         if (bind(server_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
             std::cerr << "Bind failed" << std::endl;
             close(server_fd);
             return;
         }
+
         listen(server_fd, 3);
 
         std::cout << "Server listening on port " << PORT << "..." << std::endl;
@@ -52,7 +59,10 @@ public:
     }
 
 private:
-    const int PORT = 12345;
+    const int PORT  = 12345;
+    const int reuse = 1;
+    int server_fd, new_sock;
+    struct sockaddr_in server_addr, client_addr;
 };
 }  // namespace PortIO
 
