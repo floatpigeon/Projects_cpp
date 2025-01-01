@@ -1,8 +1,8 @@
 
 <package format="3">
-  <name>parameter_subscriber</name>
+  <name>parameter_publisher</name>
   <version>0.1.0</version>
-  <description>The param_subscriber package</description>
+  <description>The param_publisher package</description>
   <maintainer email="floatpigeon@proton.me">Your Name</maintainer>
   <license>Apache-2.0</license>
 

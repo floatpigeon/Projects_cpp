@@ -8,7 +8,7 @@ class Subscriber : public rclcpp::Node {
 public:
     Subscriber() : Node("param_receiver") {
         subscription_ = this->create_subscription<std_msgs::msg::String>(
-            "params_topic", 10, [this](std_msgs::msg::String::SharedPtr msg) {
+            "ros_message", 10, [this](std_msgs::msg::String::SharedPtr msg) {
                 RCLCPP_INFO(this->get_logger(), "Received parameter: %s", msg->data.c_str());
             });
     }
